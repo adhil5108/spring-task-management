@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: adhil
+      POSTGRES_PASSWORD: adhil123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: task_app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/taskdb
+      SPRING_DATASOURCE_USERNAME: adhil
+      SPRING_DATASOURCE_PASSWORD: adhil123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      JWT_SECRET: abcdf2jcj2ncjd8ncnjchdfdvhvfhhf102938fjjvnvj@fndfndndnddvbn568938266mng
+
+volumes:
+  postgres_data:

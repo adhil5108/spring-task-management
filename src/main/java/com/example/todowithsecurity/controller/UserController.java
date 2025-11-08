@@ -47,11 +47,11 @@ public class UserController {
         return "Username: " + authentication.getName() + " | Authorities: " + authentication.getAuthorities();
     }
 
-
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public String deleteuser(@PathVariable Long id) {
         userrepo.deleteById(id);
         return "user with " + id + " deleted succesfully";
     }
+
 }
